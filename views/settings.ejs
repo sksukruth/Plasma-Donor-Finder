@@ -1,0 +1,174 @@
+<%- include("./partials/header") -%>
+    <title>DONOR FINDER</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/home.css"> 
+    
+    <style>
+      body
+{
+    counter-reset: Serial;           
+}
+
+table
+{
+    border-collapse: separate;
+}
+
+tr td:first-child:before
+{
+  counter-increment: Serial;      
+  content:  counter(Serial); 
+}
+        #totheright
+{
+  text-align: left;
+  margin-left: 40px;
+  font-size: 40px;
+  color: #32325d;
+}
+    #customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 75%;
+  margin: 2%;
+  border-color: black;
+  border: 2px;
+  margin-left: 13%
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color:#4CAF50;
+  color: black;
+}
+
+    </style>
+    </head>
+
+    <body>
+        <%- include("navbar") -%>
+            <br><br>
+            	<%- include("flash") -%>
+                <h1 id="totheright">User Account Settings</h1>
+                <div class="col-xl-8 order-xl-1">
+                        <div class="card bg-secondary shadow">
+                          <div class="card-header bg-white border-0">
+                            <%if(!donor){%>
+                            <br><br>
+                           <b> <h2 style="color: red; font-weight: bolder;">Profile not Created</h2></b>
+                            <b><a href="/donorform" style="color: #32325d;">click here to create</a><span></b>
+                            <br><br>
+
+                          <%   }%>
+                            <%if (donor){%>
+                            <h3>
+                                Protecting Profile 
+                            </h3 >
+                            <h4>You can Allow/disable others to view your profile </h4>
+                            <% if(donor.security==true){%>
+                            <h4 style="color:red">Your profile is potected </h4>
+                         <!--   <a href="/securityupdatetofalse/<%=donor.donor_id%>" style="background:green" class="btn btn-primary btn-lg">
+                          Allow others to view Profile</a> -->
+                          <form action="/securityupdatetofalse" method="POST"><input type="submit"  style="background:green" class="btn btn-primary btn-lg" value="Allow others to view Profile"></form>
+                           <br>
+                        <!--  <h4 style="color: black">On Requesting Your Profile will be visible in that section even though  you disabled it</h4>-->
+                        <%}%>
+                        <% if(donor.security==false){%>
+
+                            <h4 style="color:green">You allowed others to view Profile</h4>
+                           <!-- <a href="/securityupdatetotrue/<%=donor.donor_id%>" style="background:red" class="btn btn-primary btn-lg">
+                          Disallow others to view Profile</a> -->
+                          <form action="/securityupdatetotrue" method="POST"><input type="submit"  style="background:red" class="btn btn-primary btn-lg" value="Disable others to view Profile"></form>
+                     
+                        <%}%>
+                        <br>
+                                                <%}%>
+                        
+                        <% if(donor) {%>
+                        <hr class="my-4">
+                        <h3> Donor Donation  Details </h3>
+                        <br>
+                        <form action="" method="POST">
+                        <div class="row">
+                                  <div class="col-lg-6">
+                                    <div class="form-group focused">
+                                      <label class="form-control-label" for="no_of_times_donation" name="no_of_times_donation" id="no_of_times_donation">Number of Times Donated Blood    <label style="color: red"> *</label> </label>
+                                      <%if(donation){%>
+
+                                      <input type="text" id="no_of_times_donation" class="form-control " placeholder="Number of times Donated Blood" name="no_of_times_donation" required  style="color:black;" value="<%=donation.no_of_times_donation%>">
+                                      <%}%>
+                                      <%if(!donation){%>
+                                      <input type="text" id="input-first-name" class="form-control " placeholder="Number of times Donated Blood" name="no_of_times_donation" required  style="color:black;" >
+                                      <%}%>
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                    <div class="form-group focused">
+                                      <label class="form-control-label" for="last_date_donation">Date of Previous Donation <label style="color: red">*</label> </label>
+                                      <%if(donation){%>
+
+                                      <input type="date" value="<%=donation.last_date_donation%>" id='last_date_donation' class="form-control " placeholder="Number of times Donated Blood" name="last_date_donation" required  style="color:black;" value="<%=donation.last_date_donation%>">
+                                      <%}%>
+                                      <%if(!donation){%>
+                                      <input type="date" id="datepicker" class=" form-control"  style="color:black;"  placeholder="DD/MM/YYYY" required name="last_date_donation"/>
+                                    <%}%>
+                                    </div>
+                                  </div>
+                                </div>
+                        
+                          <input type="submit" name="" class="btn btn-primary btn-lg" value="Submit">
+                           </form>
+                           <% } %>
+                      
+                        <hr class="my-4">
+                        <h3> Yours Requested Details </h3>
+                        <table id='customers' class="table table-inf">
+                          <thead>
+                            <tr>
+                              <th>SL No</th>
+                              <th>You Requested for</th>
+                              <th>You can View or Delete</th>
+                            </tr>
+                          </thead>
+                          <% if(request){%>
+
+                          <% request.forEach(function(ca){%>
+                          <tbody>
+                            <tr>
+                              <td></td>
+                              <td><%=ca.first_name%></td>
+                              <td><a href="/requestview/<%=ca._id%>"> <i class="material-icons" style="color: black">info_outline</i> Delete or View</a></td>
+                            </tr>
+                          </tbody>
+                          <% });%>
+                          <%}%>
+
+                        </table>
+                        <br>
+                        <hr class="my-4">
+                        <%if(donor){%>
+
+                        
+                        <h3> You can Delete  your Profile</h3>
+                        <form action="/deleteprofile" method="POST"><input type="submit" style="background: red;" value="Delete Profile" class="btn btn-primary btn-lg"></form>
+                        <br>
+                        <%}%>
+                        
+
+
+
+             <%- include("./partials/footer") -%>
+
+             

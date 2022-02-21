@@ -1,0 +1,43 @@
+<%- include("./partials/header") -%>
+    <title>DONOR FINDER</title>
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/home1.css">
+    <style>
+        .col-lg-6
+        {
+            padding-right: 0px;
+            padding-left: 0px;
+        }
+        .quote {
+    margin-left: 150px;
+    font-family: cursive;
+    font-size: 2.2rem;
+}
+    </style>
+
+    <!-- <body> -->
+        <%- include("navbar") -%>
+           <!-- <div class="container-fluid"> -->
+            <br>
+            <%- include("flash") -%> 
+              <div class="row descr" style="display: flex;margin-right: -100px;margin-left: -200px;flex-wrap: wrap;">
+
+                <div class="col-lg-6" style="padding-left: 0px;padding-right: 0px">
+                  <h1 style="font-size: 2.8rem;">Find the nearest blood donor in no time.</h1>
+                </div><br><br><br>
+                <div class="col-lg-6"style="padding-left: 0px;padding-right: 0px">
+                  <img class="blood" src="/images/blood-donation (2).png" alt="" style="margin-left: 50px; height: 350px;  width: 490px;">
+                </div>
+              </div>
+              <br><br>
+              <div class="row">
+                  <p class="quote">
+                      “Donate blood and be a hero of someone’s life”
+                  </p>
+              </div>
+            <!-- </div> -->
+    <!-- </body> -->
+                
+
+             <%- include("./partials/footer") -%>
